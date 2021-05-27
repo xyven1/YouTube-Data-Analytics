@@ -1,0 +1,5 @@
+node_modules
+.vscode
+client_secret.json
+videoData.json
+config.json

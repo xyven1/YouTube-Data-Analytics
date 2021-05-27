@@ -1,0 +1,17 @@
+{
+  "name": "YouTubeDataAnalytics",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "google-auth-library": "^7.1.0",
+    "googleapis": "^74.2.0",
+    "moment": "^2.29.1"
+  }
+}
