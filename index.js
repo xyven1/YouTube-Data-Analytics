@@ -16,18 +16,7 @@ function countOccurnces(list) {
     map.set(item, (map.get(item)||0) + 1)
   })
   return map
-} 
-Object.defineProperty(Object.prototype, "map", {
-  value: function map(fn) {
-    return Object.fromEntries(
-      Object.entries(this).map(
-        ([k, v], i) => [k, fn(v, k, i)]
-      )
-    )
-  },
-  writable: true,
-  configurable: true
-})
+}
 
 function authorize(credentials, callback) {
   var clientSecret = credentials.installed.client_secret
@@ -104,9 +93,9 @@ function analyzeData(){
     watchCount: videosWatchCount.get(v.id)
   }))
   var totalTime = moment.duration(restructuredData.reduce((a, v)=> a + (v.type=='video')*v.durationS, 0),  'seconds').format()
-  var totalTimeByCategory = restructuredData.reduce((a,v)=>{
+  var totalTimeByCategory = Object.fromEntries(Object.entries(restructuredData.reduce((a,v)=>{
     if(v.type=='video') a[v.category] = a[v.category] ? a[v.category] + v.durationS : v.durationS
     return a
-  }, {}).map(v=>moment.duration(v, 's').format())
+  }, {})).sort(([,a],[,b]) => b-a).map(v=>[v[0], moment.duration(v[1], 's').format("h [hrs], m [min]")]))
   console.log("Total watch time: "  + totalTime + '\n' + JSON.stringify(totalTimeByCategory, null, 2))
 }
