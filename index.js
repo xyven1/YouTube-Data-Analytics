@@ -92,10 +92,11 @@ function analyzeData(){
     publishedAt: Date.parse(v.snippet.publishedAt),
     watchCount: videosWatchCount.get(v.id)
   }))
-  var totalTime = moment.duration(restructuredData.reduce((a, v)=> a + (v.type=='video')*v.durationS, 0),  'seconds').format()
+  var totalTime = moment.duration(restructuredData.reduce((a, v)=> a + (v.type=='video')*v.durationS, 0),  'seconds')
   var totalTimeByCategory = Object.fromEntries(Object.entries(restructuredData.reduce((a,v)=>{
     if(v.type=='video') a[v.category] = a[v.category] ? a[v.category] + v.durationS : v.durationS
     return a
   }, {})).sort(([,a],[,b]) => b-a).map(v=>[v[0], moment.duration(v[1], 's').format("h [hrs], m [min]")]))
-  console.log("Total watch time: "  + totalTime + '\n' + JSON.stringify(totalTimeByCategory, null, 2))
+  console.log(`Total watch time: ${totalTime.format()} or ${totalTime.format("h [hrs], m [min]")}
+${JSON.stringify(totalTimeByCategory, null, 2)}`)
 }
